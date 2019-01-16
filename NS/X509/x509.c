@@ -191,7 +191,7 @@ void parse(const char *filename) {
     len = getLen();
     fread(bytes, 1, len, cer);
     printf("Serial Number: 0x");
-    for (int i = 0; i < len; ++i) printf("%x", bytes[i]);
+    for (int i = 0; i < len; ++i) printf("%02x", bytes[i]);
     putchar('\n');
 
     // signature
@@ -239,10 +239,11 @@ void parse(const char *filename) {
 
     // subjectPublicKey
     fgetc(cer);
-    len = getLen();
+    len = getLen() - 1;
+    fgetc(cer);
     fread(bytes, 1, len, cer);
     printf("\tSubjectPublicKey: 0x");
-    for (int i = 0; i < len; ++i) printf("%x", bytes[i]);
+    for (int i = 0; i < len; ++i) printf("%02x", bytes[i]);
     putchar('\n');
 
     // skip optional
@@ -270,10 +271,11 @@ void parse(const char *filename) {
 
     // signatureValue
     fgetc(cer);
-    len = getLen();
+    len = getLen() - 1;
+    fgetc(cer);
     fread(bytes, 1, len, cer);
     printf("SignatureValue: 0x");
-    for (int i = 0; i < len; ++i) printf("%x", bytes[i]);
+    for (int i = 0; i < len; ++i) printf("%02x", bytes[i]);
     putchar('\n');
 
     fclose(cer);
